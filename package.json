@@ -1,11 +1,11 @@
 {
   "name": "near-seed-phrase",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Utilities to work with NEAR Protocol key pairs based on seed phrases ",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-      "test": "mocha"
+    "test": "mocha"
   },
   "dependencies": {
     "bip39-light": "^1.0.7",
