@@ -11,9 +11,9 @@ const generateSeedPhrase = () => {
 
 const normalizeSeedPhrase = (seedPhrase) => seedPhrase.trim().split(/\s+/).map(part => part.toLowerCase()).join(' ')
 
-const parseSeedPhrase = (seedPhrase) => {
+const parseSeedPhrase = (seedPhrase, derivationPath) => {
     const seed = bip39.mnemonicToSeed(normalizeSeedPhrase(seedPhrase))
-    const { key } = derivePath(KEY_DERIVATION_PATH, seed.toString('hex'))
+    const { key } = derivePath(derivationPath || KEY_DERIVATION_PATH, seed.toString('hex'))
     const keyPair = nacl.sign.keyPair.fromSeed(key)
     const publicKey = 'ed25519:' + bs58.encode(Buffer.from(keyPair.publicKey))
     const secretKey = 'ed25519:' + bs58.encode(Buffer.from(keyPair.secretKey))
