@@ -9,6 +9,10 @@ const generateSeedPhrase = () => {
     return parseSeedPhrase(bip39.generateMnemonic())
 }
 
+const generateSeedPhraseWithEntropy = (entropy) => {
+    return parseSeedPhrase(bip39.entropyToMnemonic(entropy))
+}
+
 const normalizeSeedPhrase = (seedPhrase) => seedPhrase.trim().split(/\s+/).map(part => part.toLowerCase()).join(' ')
 
 const parseSeedPhrase = (seedPhrase, derivationPath) => {
@@ -32,6 +36,7 @@ const findSeedPhraseKey = (seedPhrase, publicKeys) => {
 module.exports = {
     KEY_DERIVATION_PATH,
     generateSeedPhrase,
+    generateSeedPhraseWithEntropy,
     normalizeSeedPhrase,
     parseSeedPhrase,
     findSeedPhraseKey

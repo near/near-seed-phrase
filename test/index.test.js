@@ -1,5 +1,12 @@
 const assert = require('assert');
-const { generateSeedPhrase, normalizeSeedPhrase, parseSeedPhrase, findSeedPhraseKey } = require('../');
+const nacl = require('tweetnacl');
+const {
+    generateSeedPhrase,
+    generateSeedPhraseWithEntropy,
+    normalizeSeedPhrase,
+    parseSeedPhrase,
+    findSeedPhraseKey
+} = require('../');
 
 describe('seed phrase', () => {
     it('generate', () => {
@@ -7,6 +14,13 @@ describe('seed phrase', () => {
         assert.ok(seedPhrase);
         assert.ok(secretKey);
         assert.ok(publicKey);
+    });
+
+    it('generate with entropy', () => {
+        const entropy = Buffer.from(nacl.hash(Buffer.from('The quick brown fox jumps over the lazy dog', 'utf8'))).toString('hex')
+        const { seedPhrase, secretKey } = generateSeedPhraseWithEntropy(entropy.substr(0, 32));
+        const { secretKey: secretKey2 } = parseSeedPhrase(seedPhrase);
+        assert.strictEqual(secretKey, secretKey2);
     });
 
     it('normalize', () => {
