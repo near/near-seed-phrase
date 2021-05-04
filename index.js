@@ -5,8 +5,8 @@ const nacl = require('tweetnacl');
 
 const KEY_DERIVATION_PATH = "m/44'/397'/0'"
 
-const generateSeedPhrase = () => {
-    return parseSeedPhrase(bip39.generateMnemonic())
+const generateSeedPhrase = (entropy) => {
+    return parseSeedPhrase(entropy !== undefined ? bip39.entropyToMnemonic(entropy) : bip39.generateMnemonic())
 }
 
 const normalizeSeedPhrase = (seedPhrase) => seedPhrase.trim().split(/\s+/).map(part => part.toLowerCase()).join(' ')
