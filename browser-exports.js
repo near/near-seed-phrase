@@ -1,0 +1,1 @@
+window.nearSeedPhrase = require('./index');
