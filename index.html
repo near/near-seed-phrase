@@ -56,6 +56,7 @@
     function generate() {
       let { seedPhrase, secretKey, publicKey } = nearSeedPhrase.generateSeedPhrase();
       sk.key = secretKey;
+      if (!sk.innerText.startsWith('•')) sk.innerText = secretKey;
       document.getElementById("sp").innerText = seedPhrase;
       document.getElementById("pk").innerText = publicKey;
     }
