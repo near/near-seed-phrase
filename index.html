@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    NEAR Seed Phrase Generator
+  </title>
+</head>
+
+<body>
+  <div class="container" align="center">
+    <input id="gp" type="button" value="Generate a seed phrase">
+
+    <br />
+    <br />
+
+    <table>
+      <tr>
+        <td class="t"> Phrase: </td>
+        <td id="sp"> ... </td>
+      </tr>
+      <tr>
+        <td class="t"> Secret Key: </td>
+        <td id="sk"> ... </td>
+      </tr>
+      <tr>
+        <td class="t"> Public Key: </td>
+        <td id="pk"> ... </td>
+      </tr>
+    </table>
+
+  </div>
+
+  <style>
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -moz-transform: translateX(-50%) translateY(-50%);
+      -webkit-transform: translateX(-50%) translateY(-50%);
+      transform: translateX(-50%) translateY(-50%);
+    }
+
+    table,
+    td,
+    tr {
+      border: 1px solid black;
+    }
+
+    .t {
+      font-weight: bold;
+    }
+
+    td {
+      padding: 5px
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/gh/near/near-seed-phrase@d0f7671/dist/near-seed-phrase.min.js"></script>
+  <script>
+    function generate() {
+      let { seedPhrase, secretKey, publicKey } = nearSeedPhrase.generateSeedPhrase();
+      document.getElementById("sp").innerText = seedPhrase;
+      document.getElementById("sk").innerText = secretKey;
+      document.getElementById("pk").innerText = publicKey;
+    }
+    document.getElementById("gp").onclick = generate;
+    generate();
+  </script>
+
+</body>
+
+</html>
