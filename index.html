@@ -21,7 +21,10 @@
       </tr>
       <tr>
         <td class="t"> Secret Key: </td>
-        <td id="sk"> ... </td>
+        <td>
+          <input id="skv" type="button" value="👁">
+          <span id="sk"> ... </span>
+        </td>
       </tr>
       <tr>
         <td class="t"> Public Key: </td>
@@ -32,15 +35,6 @@
   </div>
 
   <style>
-    .container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      -moz-transform: translateX(-50%) translateY(-50%);
-      -webkit-transform: translateX(-50%) translateY(-50%);
-      transform: translateX(-50%) translateY(-50%);
-    }
-
     table,
     td,
     tr {
@@ -58,13 +52,18 @@
 
   <script src="https://cdn.jsdelivr.net/gh/near/near-seed-phrase@d0f7671/dist/near-seed-phrase.min.js"></script>
   <script>
+    let sk = document.getElementById("sk");
     function generate() {
       let { seedPhrase, secretKey, publicKey } = nearSeedPhrase.generateSeedPhrase();
+      sk.key = secretKey;
       document.getElementById("sp").innerText = seedPhrase;
-      document.getElementById("sk").innerText = secretKey;
       document.getElementById("pk").innerText = publicKey;
     }
     document.getElementById("gp").onclick = generate;
+    (document.getElementById('skv').onclick = () => {
+      if (sk.innerText.startsWith('•')) sk.innerText = sk.key
+      else sk.innerText = '•'.repeat(96);
+    })();
     generate();
   </script>
 
