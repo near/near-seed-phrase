@@ -9,6 +9,16 @@
 
 <body>
   <div class="container" align="center">
+    <h2>
+      NEAR Seed Phrase Generator
+    </h2>
+
+    <a href="https://github.com/near/near-seed-phrase">https://github.com/near/near-seed-phrase</a>
+
+    <br />
+    <br />
+    <br />
+
     <input id="gp" type="button" value="Generate a seed phrase">
 
     <br />
@@ -17,24 +27,41 @@
     <table>
       <tr>
         <td class="t"> Seed Phrase: </td>
-        <td id="sp"> ... </td>
+        <td id="sp" colspan="2"> ... </td>
       </tr>
       <tr>
         <td class="t"> Secret Key: </td>
-        <td>
-          <input id="skv" type="button" value="👁">
-          <span id="sk"> ... </span>
-        </td>
+        <td> <input id="skv" type="button" value="👁"> </td>
+        <td id="sk"> ... </td>
       </tr>
       <tr>
         <td class="t"> Public Key: </td>
-        <td id="pk"> ... </td>
+        <td id="pk" colspan="2"> ... </td>
       </tr>
     </table>
+
+    <br />
+
+    <div id="footer">
+      <hr />
+      <a href="https://github.com/miraclx/near-seed-phrase/tree/gh-pages">View Source</a>
+    </div>
 
   </div>
 
   <style>
+    .container {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      -ms-transform: translateY(-80%);
+      transform: translateY(-80%);
+    }
+
+    table {
+      width: 40%;
+    }
+
     table,
     td,
     tr {
@@ -43,10 +70,20 @@
 
     .t {
       font-weight: bold;
+      white-space: nowrap;
+    }
+
+    #sk {
+      width: 100%;
     }
 
     td {
-      padding: 5px
+      padding: 5px;
+      word-break: break-all;
+    }
+
+    #footer {
+      width: 10%;
     }
   </style>
 
