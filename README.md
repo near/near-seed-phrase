@@ -15,5 +15,5 @@ const { parseSeedPhrase, generateSeedPhrase } = require('near-seed-phrase');
 const {seedPhrase, publicKey, secretKey} = generateSeedPhrase()
 
 // To recover keys from the seed phrase
-const { pubKey, secKey } = parseSeedPhrase(seedPhrase);
+const { publicKey, secretKey } = parseSeedPhrase(seedPhrase);
 ```
