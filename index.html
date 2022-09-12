@@ -27,16 +27,15 @@
     <table>
       <tr>
         <td class="t"> Seed Phrase: </td>
-        <td id="sp" colspan="2"> ... </td>
+        <td id="sp"> ... </td>
       </tr>
       <tr>
         <td class="t"> Secret Key: </td>
-        <td> <input id="skv" type="button" value="👁"> </td>
         <td id="sk"> ... </td>
       </tr>
       <tr>
         <td class="t"> Public Key: </td>
-        <td id="pk" colspan="2"> ... </td>
+        <td id="pk"> ... </td>
       </tr>
     </table>
 
@@ -91,20 +90,17 @@
 
   <script src="https://cdn.jsdelivr.net/gh/near/near-seed-phrase@d0f7671/dist/near-seed-phrase.min.js"></script>
   <script>
-    let sk = document.getElementById("sk");
-    function generate() {
-      let { seedPhrase, secretKey, publicKey } = nearSeedPhrase.generateSeedPhrase();
-      sk.key = secretKey;
-      if (!sk.innerText.startsWith('•')) sk.innerText = secretKey;
-      document.getElementById("sp").innerText = seedPhrase;
-      document.getElementById("pk").innerText = publicKey;
-    }
-    document.getElementById("gp").onclick = generate;
-    (document.getElementById('skv').onclick = () => {
-      if (sk.innerText.startsWith('•')) sk.innerText = sk.key
-      else sk.innerText = '•'.repeat(80);
+    let [gp, sp, sk, pk] = document.querySelectorAll("#gp,#sp,#sk,#pk");
+    (sk.onclick = sp.onclick = () => {
+      if (sk.innerText.startsWith('•')) [sk.innerText, sp.innerText] = [sk.key, sp.phrase];
+      else sk.innerText = sp.innerText = '•'.repeat(80);
     })();
-    generate();
+    (gp.onclick = () => {
+      let { seedPhrase, secretKey, publicKey } = nearSeedPhrase.generateSeedPhrase();
+      [sk.key, sp.phrase] = [secretKey, seedPhrase];
+      if (!sk.innerText.startsWith('•')) [sk.innerText, sp.innerText] = [secretKey, seedPhrase];
+      pk.innerText = publicKey;
+    })();
   </script>
 
 </body>
