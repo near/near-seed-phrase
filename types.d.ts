@@ -5,6 +5,6 @@ declare module 'near-seed-phrase' {
         publicKey: string;
     }
 
-    export function parseSeedPhrase(phrase: string): Seed;
+    export function parseSeedPhrase(seedPhrase: string, derivationPath: string): Seed;
     export function generateSeedPhrase(): Seed;
 }
