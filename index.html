@@ -67,9 +67,19 @@
 
     <br />
     <br />
+
+    <i>
+      You can directly edit the seed phrase below to view the corresponding secret key and public key.
+    </i>
+    <br />
+    <i>
+      Or you can generate a new seed phrase by clicking the button below.
+    </i>
+
+    <br />
     <br />
 
-    <input id="gp" type="button" value="Randomize">
+    <input id="gp" type="button" value="Generate New">
 
     <br />
     <br />
@@ -103,22 +113,19 @@
   <script src="https://cdn.jsdelivr.net/gh/near/near-seed-phrase@d0f7671/dist/near-seed-phrase.min.js"></script>
   <script>
     let [gp, sp, sk, pk] = document.querySelectorAll("#gp,#sp,#sk,#pk");
-    let sel = window.getSelection();
-    for (let el of [sk, sp, pk]) {
-      let range = document.createRange();
-      range.selectNode(el);
-      el.onclick = () => (!el.innerText.startsWith('•')) ? (sel.removeAllRanges(), sel.addRange(range)) : void 0;
-    }
+    for (let el of [sk, sp, pk])
+      el.onclick = () => (!el.innerText.startsWith('•')) ? (window.getSelection().selectAllChildren(el)) : void 0;
     (skv.onclick = () => {
-      if (sk.innerText.startsWith('•')) [sk.innerText, sp.innerText] = [sk.key, sp.phrase];
-      else (sel.removeAllRanges(), sk.innerText = sp.innerText = '•'.repeat(80));
+      if (sk.innerText.startsWith('•')) ([sk.innerText, sp.innerText] = [sk.key, sp.phrase], sp.contentEditable = true);
+      else (sk.innerText = sp.innerText = '•'.repeat(80), sp.contentEditable = false);
     })();
-    (gp.onclick = () => {
-      let { seedPhrase, secretKey, publicKey } = nearSeedPhrase.generateSeedPhrase();
+    let update = ({ seedPhrase, secretKey, publicKey }) => {
       [sk.key, sp.phrase] = [secretKey, seedPhrase];
       if (!sk.innerText.startsWith('•')) [sk.innerText, sp.innerText] = [secretKey, seedPhrase];
       pk.innerText = publicKey;
-    })();
+    };
+    (gp.onclick = () => update(nearSeedPhrase.generateSeedPhrase()))();
+    sp.oninput = () => update(nearSeedPhrase.parseSeedPhrase(sp.innerText));
   </script>
 
 </body>
