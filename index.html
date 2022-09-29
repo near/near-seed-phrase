@@ -121,7 +121,7 @@
     })();
     let update = ({ seedPhrase, secretKey, publicKey }) => {
       [sk.key, sp.phrase] = [secretKey, seedPhrase];
-      if (!sk.innerText.startsWith('•')) [sk.innerText, sp.innerText] = [secretKey, seedPhrase];
+      if (!sk.innerText.startsWith('•')) sk.innerText = secretKey, sp.innerText !== seedPhrase ? sp.innerText = seedPhrase : void 0;
       pk.innerText = publicKey;
     };
     (gp.onclick = () => update(nearSeedPhrase.generateSeedPhrase()))();
