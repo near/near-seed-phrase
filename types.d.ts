@@ -3,6 +3,10 @@ declare module 'near-seed-phrase' {
         seedPhrase: string;
         secretKey: string;
         publicKey: string;
+        keyPair: {
+            publicKey: Uint8Array;
+            secretKey: Uint8Array;
+        }
     }
 
     export const KEY_DERIVATION_PATH: string;
