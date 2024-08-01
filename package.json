@@ -9,6 +9,10 @@
     "dist": "browserify browser-exports.js -i node-fetch -i http -i https -o dist/near-seed-phrase.js && browserify browser-exports.js -i node-fetch -g uglifyify -o dist/near-seed-phrase.min.js"
   },
   "types": "types.d.ts",
+  "files": [
+    "dist/",
+    "types.d.ts"
+  ],
   "dependencies": {
     "bip39-light": "^1.0.7",
     "bs58": "^4.0.1",
