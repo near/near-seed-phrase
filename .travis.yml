@@ -1,6 +1,8 @@
 language: node_js
 node_js: 
- - 10
+ - 20
+ - 22
+ - 24
 
 before_script:
   # - "curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | sudo bash"
@@ -10,4 +12,5 @@ script:
   # - fossa analyze --server-scan
   # - fossa test
   - yarn test
-
+  - yarn dist
+  - yarn test:browser

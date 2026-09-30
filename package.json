@@ -1,17 +1,23 @@
 {
   "name": "near-seed-phrase",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Utilities to work with NEAR Protocol key pairs based on seed phrases ",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "test": "mocha",
-    "dist": "browserify browser-exports.js -i node-fetch -i http -i https -o dist/near-seed-phrase.js && browserify browser-exports.js -i node-fetch -g uglifyify -o dist/near-seed-phrase.min.js"
+    "dist": "npm run build:crypto && browserify browser-exports.js -i node-fetch -i http -i https -o dist/near-seed-phrase.js && esbuild dist/near-seed-phrase.js --minify --target=es2020 --outfile=dist/near-seed-phrase.min.js",
+    "test:browser": "mocha test/browser.test.js",
+    "build:crypto": "esbuild crypto-source.mjs --bundle --platform=browser --format=cjs --target=es2020 --outfile=mldsa65.cjs"
   },
   "types": "types.d.ts",
   "files": [
     "dist/",
-    "types.d.ts"
+    "types.d.ts",
+    "nep649.js",
+    "mldsa65.cjs",
+    "crypto-source.mjs",
+    "THIRD_PARTY_LICENSES.txt"
   ],
   "dependencies": {
     "bip39-light": "^1.0.7",
@@ -22,6 +28,7 @@
   "devDependencies": {
     "browserify": "^17.0.0",
     "mocha": "^8.1.3",
-    "uglifyify": "^5.0.2"
+    "@noble/post-quantum": "0.7.1",
+    "esbuild": "0.25.12"
   }
 }

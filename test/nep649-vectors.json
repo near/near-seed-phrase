@@ -1,0 +1,189 @@
+{
+  "source": "https://github.com/vsavchyn-dev/NEPs/blob/cecbad372435edd17607a0a45401ab2cf5839fc8/neps/assets/nep-0649/test-vectors.json",
+  "vectors": [
+    {
+      "name": "Test vector SLIP-0010 1",
+      "seed": "000102030405060708090a0b0c0d0e0f",
+      "full_derivation_path": "m/0'/1'/2'/2'/1000000000'",
+      "derivations": [
+        {
+          "path": "m",
+          "node_secret": "dbe1e4f588227dec9e2dc59a4534e7721bf3e977452f0193591603f79880795b",
+          "chain_code": "7e74b6275f92cc4fb2cbdac0c63cb5e7ac2bce1ded2b7dbc7bf2232f772578d5",
+          "private_key_sha256": "4240d96877a51f3b54b87ab5eb7fcc32b858ab34d0ae9a6024d4fcfdf7cf52ed",
+          "public_key_sha256": "f41b8366cd9b720dbab9dfcefde673e4c19798192d7543f30f277e57e77ba457"
+        },
+        {
+          "path": "m/0'",
+          "node_secret": "ee139cc19250043529ae16f3d716208298deefa7cfd4a5a2d9af7ac6d6cac4a1",
+          "chain_code": "d8b27c87ec212d6501629199262a9d0d66ec26deab313c26a474bc4ddd5dce7c",
+          "private_key_sha256": "63add30fd2dc31650fd6e1182b9ee97d5790ea9e7900b9d85cb7c39e747a3e70",
+          "public_key_sha256": "1d9d7fce0a1560acef9b117f3e3022cb0bdd46f30a3134db33165baf66b53e7e"
+        },
+        {
+          "path": "m/0'/1'",
+          "node_secret": "a14dd01ed1fc242b0613e1e0911cc67c1b4f790860649068bc1eda32c89a0e5d",
+          "chain_code": "60219beef857bd0bc7870424c4f60464decb097a18ae37b035df22ebaa7515b9",
+          "private_key_sha256": "547b30cee6e586b2d5e034109d4d716b25c76a958772f7963e5e7f0dc9c698d3",
+          "public_key_sha256": "0fdc416cbe544a493b59ae8112a907d5acf09ed4583eb8e12d6c769bcf394943"
+        },
+        {
+          "path": "m/0'/1'/2'",
+          "node_secret": "5ec67a61dcd29fa73ab142c6bd54e745b4c47272f2339810bfe1f30a55342a26",
+          "chain_code": "dc7b0e1379b3f1acd02d1e25f13d8bb16830ca68c73b00d900b9030a41d6a658",
+          "private_key_sha256": "c542f192720f8049e98fec49f606ef7715ed5e70a47732b01d3fe43417d1f255",
+          "public_key_sha256": "6db4146987c59099709622700d66bcb07b8d49e1007ea6570e15fc3f6dac1c53"
+        },
+        {
+          "path": "m/0'/1'/2'/2'",
+          "node_secret": "636c66df2469c084e524faa342810079b1e10c7ed92de94c10e8860695e6b56e",
+          "chain_code": "565cb34027c3b54773f7f48e329bc86db7ffc6f618b112af6d59a3f82501e17a",
+          "private_key_sha256": "209d326194814805f51efa6a74ba9cec3c25e2987c7def5456f82f2a0f815443",
+          "public_key_sha256": "d487dcf16e74ddd731fafe780d0e5e8b8d338d4f7a3b7e209f8b4c519419764d"
+        },
+        {
+          "path": "m/0'/1'/2'/2'/1000000000'",
+          "node_secret": "3a7a1bdc57af0ee8a92da8ec4d900ecfeb269c13073127f032794af13f86c038",
+          "chain_code": "dc65d6cf4fa993c2f04fae2b41d70d8c5ba4c9d2042ea5720bf42a2315a6b7db",
+          "private_key_sha256": "538543d3611be9bf545cba1fade4583e6e5017b1cac0f7f32d60e64e6bbe0c11",
+          "public_key_sha256": "9591ff122a7eff9cd64100f2123e678db9c257815ec5570b0b6acd8847e62f24"
+        }
+      ]
+    },
+    {
+      "name": "Test vector SLIP-0010 2",
+      "seed": "fffcf9f6f3f0edeae7e4e1dedbd8d5d2cfccc9c6c3c0bdbab7b4b1aeaba8a5a29f9c999693908d8a8784817e7b7875726f6c696663605d5a5754514e4b484542",
+      "full_derivation_path": "m/0'/2147483647'/1'/2147483646'/2'",
+      "derivations": [
+        {
+          "path": "m",
+          "node_secret": "67c25895a02758460a9bd084aed3fb3db0ec33b85219d6723e356013da7a6714",
+          "chain_code": "0e696f43f0e71c1c9febf61f43f10903385b78cee5871915472027b25ba755cc",
+          "private_key_sha256": "32f8e102c05de82d64b7f0a301e31bff79bad9b08b413d49cc5dd7ebe13b8971",
+          "public_key_sha256": "36233a01384e7081becf4da903d10fe7d357da9061cbed1983819fe0a0ced509"
+        },
+        {
+          "path": "m/0'",
+          "node_secret": "e8bf8681f4a1a1d6c854e69b75fd0b39069b21ad983d74cf901dcb01985e9091",
+          "chain_code": "d977be3c8525364e155764ef76b985126d8f6be41b55e6e50a9915ae29f27a56",
+          "private_key_sha256": "d77717c3da965bbd49762079ccfdc799f68470c53e3ebedf90189c462c6b5470",
+          "public_key_sha256": "577dc77b0987d6cc587a88605590b183f3a7580577dab08cac1ede0a9636b882"
+        },
+        {
+          "path": "m/0'/2147483647'",
+          "node_secret": "4cfca7898c7bbb4a0bb7dc3d14a2d489eaaa87f2c4593985525d256f93cf8888",
+          "chain_code": "45406bac7fc36390d89ac938bff6ca1ebf9fc6da2057d1580b26a8f2e25a0d2f",
+          "private_key_sha256": "22efb6cd3447ea1d2216002b2b0535dce77344ad60643316ea3b0bdea529fb8a",
+          "public_key_sha256": "a0155112060496906db18bd46cdd7e18dd35e6e14621083300a0027fd6a421a2"
+        },
+        {
+          "path": "m/0'/2147483647'/1'",
+          "node_secret": "969352513da88e996a133be855316dc3b46a0cd9792ff340c3bf5a06fa826c3f",
+          "chain_code": "10ffddec3c4acf719afe528b1ced03e0f7d8555999c11b69376bd5ff4e04dbea",
+          "private_key_sha256": "696b6dbb359b154f563af5f813726bbed5eb7d59d2927bc306ab929d91822172",
+          "public_key_sha256": "41357d47d1269fe94f9fc66396d7dc768e5bcaae700a0b877471a06ef2e12d27"
+        },
+        {
+          "path": "m/0'/2147483647'/1'/2147483646'",
+          "node_secret": "ea4de14b6b31d080ad6dc5150642e59e79b83c4fdb90224b1c0d27a3240133da",
+          "chain_code": "3580d842e9d8d6a072b77d95e08b0a87648edfaec9bc25cee6c9127d1aa4a679",
+          "private_key_sha256": "a6bdaa782179f29462974159ea7dccac2965fab288562f613e262dbda13f3f86",
+          "public_key_sha256": "e947963f404e03be513bdccf23c5a3cb9bd4455f306276fcd9acd4b0d3e16e75"
+        },
+        {
+          "path": "m/0'/2147483647'/1'/2147483646'/2'",
+          "node_secret": "b73d5dd516a99ab278011406a328066f80f34c1ae878aa9fa5b92c4ef95a965f",
+          "chain_code": "55a202d3f7803dd79e31c454e65eb7da49dee824b467bfed5204df980e71571d",
+          "private_key_sha256": "b2feb71875071ee3400b25f88a9dbd5e8beda24a4d81bafff9c9682c44820b48",
+          "public_key_sha256": "4b6c9f1dd1a811fe704c1355e32c43b63007317868ed6c3fce385f11c1b5da39"
+        }
+      ]
+    },
+    {
+      "name": "Test vector NEAR 1",
+      "seed": "85d44f13ba9c837a8fe51474cd7b7ed6777591808aca0eb1d5695e914a060c8efbf0ee7e325e24490d69ca824af62071416504ddca17332d2a28bea7377792da",
+      "full_derivation_path": "m/44'/397'/0'",
+      "derivations": [
+        {
+          "path": "m",
+          "node_secret": "765883590f2bb53c8186828791f58b59231a3945d695464f117f677c7fac55ec",
+          "chain_code": "7e326a33cdeedc0a32ce01e834831dddc253e27b3d00c87c59c159e662ef257b",
+          "private_key_sha256": "b72b72ed75bac708513f2361c732d631fe2ee30ea2f0e69dc30623f3c3e89693",
+          "public_key_sha256": "085da794a4ddea17a874a87253a7b6fc035da7a9495b650df6902d43fcaa9851"
+        },
+        {
+          "path": "m/44'",
+          "node_secret": "fe556e3fa041d7b8cad66516c8b45b4ccf585c137d5e1898d145c20651828f94",
+          "chain_code": "f0344afcced1f9e18e6cfbae4f204820a3d9a19f0b23327c1a59ab8365c2f905",
+          "private_key_sha256": "5052d7ac28d8a36630a7ab4295d82120608b69477c765c5a0d04cf5d098b0ae2",
+          "public_key_sha256": "81b73ad9785a1ba53fe68ef9544a2b79932be3b284d6f249235bcac1c3d5147d"
+        },
+        {
+          "path": "m/44'/397'",
+          "node_secret": "9058b860f62989e323875ac4b1f5e11f61b659bb7f4faf244c9b69151b7d36aa",
+          "chain_code": "685f1b3530adcb2918fb8ba1debf0ca5cf79bedeba4bf0f9be2058525b991aeb",
+          "private_key_sha256": "041b568d456b784ecff1d3e0e71ee6866b1e0fb075138de20cb7f386d9bbca25",
+          "public_key_sha256": "14164d99f9cb49fdec22334efc954587799076d43a94d0343625ddf056ba0e16"
+        },
+        {
+          "path": "m/44'/397'/0'",
+          "node_secret": "e82fe9d0fd2a6af0798736fc2ed44907faf66d4a7a543499e7f1c04f18a7d3c4",
+          "chain_code": "c95feddbe3025baf6bc5b448b4c8f5c81817b653d594fe554f80c2da8e1a431d",
+          "private_key_sha256": "22552d23d11aa06162499d16b7264eeb4f4f0b0eeebc37b23cbc92188c9f82aa",
+          "public_key_sha256": "377c1d992fb7b6f7975f9d1ad81c41ea80c27587ea8714b51e62057923937391"
+        }
+      ],
+      "mnemonic": "orbit pill once attitude garbage prefer afford what banner weird path present dream tide unfold despair inject physical lens battle fancy finish fever toward"
+    },
+    {
+      "name": "Test vector NEAR 2",
+      "seed": "85d44f13ba9c837a8fe51474cd7b7ed6777591808aca0eb1d5695e914a060c8efbf0ee7e325e24490d69ca824af62071416504ddca17332d2a28bea7377792da",
+      "full_derivation_path": "m/44'/397'/1'/0'/1'",
+      "derivations": [
+        {
+          "path": "m",
+          "node_secret": "765883590f2bb53c8186828791f58b59231a3945d695464f117f677c7fac55ec",
+          "chain_code": "7e326a33cdeedc0a32ce01e834831dddc253e27b3d00c87c59c159e662ef257b",
+          "private_key_sha256": "b72b72ed75bac708513f2361c732d631fe2ee30ea2f0e69dc30623f3c3e89693",
+          "public_key_sha256": "085da794a4ddea17a874a87253a7b6fc035da7a9495b650df6902d43fcaa9851"
+        },
+        {
+          "path": "m/44'",
+          "node_secret": "fe556e3fa041d7b8cad66516c8b45b4ccf585c137d5e1898d145c20651828f94",
+          "chain_code": "f0344afcced1f9e18e6cfbae4f204820a3d9a19f0b23327c1a59ab8365c2f905",
+          "private_key_sha256": "5052d7ac28d8a36630a7ab4295d82120608b69477c765c5a0d04cf5d098b0ae2",
+          "public_key_sha256": "81b73ad9785a1ba53fe68ef9544a2b79932be3b284d6f249235bcac1c3d5147d"
+        },
+        {
+          "path": "m/44'/397'",
+          "node_secret": "9058b860f62989e323875ac4b1f5e11f61b659bb7f4faf244c9b69151b7d36aa",
+          "chain_code": "685f1b3530adcb2918fb8ba1debf0ca5cf79bedeba4bf0f9be2058525b991aeb",
+          "private_key_sha256": "041b568d456b784ecff1d3e0e71ee6866b1e0fb075138de20cb7f386d9bbca25",
+          "public_key_sha256": "14164d99f9cb49fdec22334efc954587799076d43a94d0343625ddf056ba0e16"
+        },
+        {
+          "path": "m/44'/397'/1'",
+          "node_secret": "1812e5494894435be5c70bfcb2d6bd53fcc6191eec024ce7a4342d56720afcaf",
+          "chain_code": "c1cc4a79bd9cb7010b91dc50858b6651b35add2c393dd7bbef37801bfd40ee9e",
+          "private_key_sha256": "928ba3f0c7693024fbd2c8822d74fb471b25ec35d38e729a401dc18f7663ba60",
+          "public_key_sha256": "f51d75e1129084e7ea57273892ebc958daf569f09c1950794a5e03a2e6bcccd4"
+        },
+        {
+          "path": "m/44'/397'/1'/0'",
+          "node_secret": "062c474daddf5bfa470d9092c20760e1d59c4138b8782a692707cc4f46575735",
+          "chain_code": "1709a088075b83872aec842c829cab2f828df9a7014557593070e40a2920f031",
+          "private_key_sha256": "0ba85b0ef39e73b72778b2b54f371db28e4adde018f74a3e8491dd6f2217dc59",
+          "public_key_sha256": "2c33474f1d2720098cd999a8e7d2096c8c22a1e93a4906afc6a67d901ad92eaf"
+        },
+        {
+          "path": "m/44'/397'/1'/0'/1'",
+          "node_secret": "b4a7a302422d48cd8dd0cfd98b3bad14d9f604be7df1cadd8b13c489931de4a0",
+          "chain_code": "8ecf7d820efdb058ca5e818fdcbdeb67d5f2449bcbceb7e7b8223e0735a13a09",
+          "private_key_sha256": "fda52994570099e3d7d4bdafff160422b96391d70625887e43b58edc79ab55b4",
+          "public_key_sha256": "6243d09f02e2adc4698cab290b8ddbdeb8da9399a38f81172d02bb40122c7780"
+        }
+      ],
+      "mnemonic": "orbit pill once attitude garbage prefer afford what banner weird path present dream tide unfold despair inject physical lens battle fancy finish fever toward"
+    }
+  ]
+}
