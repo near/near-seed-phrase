@@ -25,7 +25,6 @@ describe('browser distributions', function () {
             const generated = api.generateSeedPhrase(undefined, { keyType: 'ml-dsa-65' });
             assert.equal(generated.seedPhrase.split(' ').length, 24);
             assert.equal(api.parseSeedPhrase(generated.seedPhrase, { keyType: 'ml-dsa-65' }).secretKey, generated.secretKey);
-            assert.equal(api.deriveSeedPhraseKeys(vector.mnemonic).length, 4);
         });
         it(`${filename}: recovery needs no RNG and generation fails closed`, () => {
             const context = { window: {}, TextEncoder, TextDecoder };

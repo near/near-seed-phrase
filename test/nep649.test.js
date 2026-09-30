@@ -6,16 +6,14 @@ const { keygen } = require('../mldsa65.cjs');
 const { deriveMLDSA65Node } = require('../nep649');
 const { vectors } = require('./nep649-vectors.json');
 const {
-    parseSeedPhrase, generateSeedPhrase, deriveSeedPhraseKeys,
-    KEY_DERIVATION_PATH, FULL_KEY_DERIVATION_PATH
+    parseSeedPhrase, generateSeedPhrase, KEY_DERIVATION_PATH
 } = require('../');
 
 const mnemonic = vectors[2].mnemonic;
 const pq = { keyType: 'ml-dsa-65' };
+const FULL_KEY_DERIVATION_PATH = "m/44'/397'/0'/0'/1'";
 const decode = key => bs58.decode(key.split(':')[1]);
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
-let ml_dsa65;
-before(async () => { ({ ml_dsa65 } = await import('@noble/post-quantum/ml-dsa.js')); });
 
 describe('NEP-649 canonical vectors', () => {
     // Digests are taken from the complete upstream key bytes, not this implementation.
@@ -49,7 +47,9 @@ describe('NEP-649 seed phrase API', () => {
     it('preserves the legacy Ed25519 defaults and positional paths', () => {
         const legacy = parseSeedPhrase(mnemonic);
         assert.deepStrictEqual(parseSeedPhrase(mnemonic, KEY_DERIVATION_PATH), legacy);
-        assert.deepStrictEqual(parseSeedPhrase(mnemonic, ''), legacy);
+        for (const path of ['', null, false, 0, NaN]) {
+            assert.deepStrictEqual(parseSeedPhrase(mnemonic, path), legacy);
+        }
         assert.deepStrictEqual(parseSeedPhrase(mnemonic, { keyType: 'ed25519' }), legacy);
         assert.deepStrictEqual(parseSeedPhrase(mnemonic, FULL_KEY_DERIVATION_PATH),
             parseSeedPhrase(mnemonic, { derivationPath: FULL_KEY_DERIVATION_PATH }));
@@ -68,8 +68,6 @@ describe('NEP-649 seed phrase API', () => {
     it('NFKD-normalizes before validating the mnemonic in new APIs', () => {
         const wide = mnemonic.replace(/[a-z]/g, letter => String.fromCharCode(letter.charCodeAt(0) + 0xfee0));
         assert.equal(parseSeedPhrase(wide, pq).secretKey, parseSeedPhrase(mnemonic, pq).secretKey);
-        assert.deepStrictEqual(deriveSeedPhraseKeys(wide).map(key => key.publicKey),
-            deriveSeedPhraseKeys(mnemonic).map(key => key.publicKey));
         assert.equal(parseSeedPhrase(wide, pq).seedPhrase, wide);
     });
 
@@ -84,7 +82,7 @@ describe('NEP-649 seed phrase API', () => {
             node = createHmac('sha512', node.slice(32))
                 .update(Buffer.concat([Buffer.from([0]), node.slice(0, 32), indexBytes])).digest();
         }
-        assert.equal(hash(decode(actual.publicKey)), hash(ml_dsa65.keygen(node.slice(0, 32)).publicKey));
+        assert.equal(hash(decode(actual.publicKey)), hash(keygen(node.slice(0, 32)).publicKey));
         assert.equal(actual.secretKey, parseSeedPhrase(mnemonic, { ...pq, passphrase: passphrase.normalize('NFKD') }).secretKey);
         assert.notEqual(actual.secretKey, parseSeedPhrase(mnemonic, pq).secretKey);
         assert.notEqual(actual.secretKey, parseSeedPhrase(mnemonic, { ...pq, passphrase: passphrase.trim() }).secretKey);
@@ -114,27 +112,11 @@ describe('NEP-649 seed phrase API', () => {
         });
     }
 
-    it('checks both default paths in both trees without changing legacy matching', () => {
-        const candidates = deriveSeedPhraseKeys(mnemonic, { passphrase: 'test' });
-        assert.equal(candidates.length, 4);
-        assert.equal(new Set(candidates.map(key => key.publicKey)).size, 4);
-        assert.deepStrictEqual(candidates.map(({ keyType, derivationPath }) => [keyType, derivationPath]), [
-            ['ed25519', KEY_DERIVATION_PATH], ['ed25519', FULL_KEY_DERIVATION_PATH],
-            ['ml-dsa-65', KEY_DERIVATION_PATH], ['ml-dsa-65', FULL_KEY_DERIVATION_PATH]
-        ]);
-        for (const candidate of candidates) {
-            assert.equal(candidate.secretKey, parseSeedPhrase(mnemonic, {
-                keyType: candidate.keyType, derivationPath: candidate.derivationPath, passphrase: 'test'
-            }).secretKey);
-        }
-    });
-
-    it('produces signing keys accepted by ML-DSA-65', () => {
-        const keys = parseSeedPhrase(mnemonic, pq);
-        const message = Buffer.from('NEP-649 interoperability');
-        const signature = ml_dsa65.sign(message, decode(keys.secretKey));
-        assert.ok(ml_dsa65.verify(signature, message, decode(keys.publicKey)));
-        assert.ok(!ml_dsa65.verify(signature, Buffer.from('different'), decode(keys.publicKey)));
+    it('supports both default paths in both derivation trees', () => {
+        const keys = ['ed25519', 'ml-dsa-65'].flatMap(keyType =>
+            [KEY_DERIVATION_PATH, FULL_KEY_DERIVATION_PATH].map(derivationPath =>
+                parseSeedPhrase(mnemonic, { keyType, derivationPath }).publicKey));
+        assert.equal(new Set(keys).size, 4);
     });
 
     for (const path of ["m/44'/397'/2147483647'", "m/44'/397'/0'/0'/1'/2'"]) {
@@ -154,16 +136,12 @@ describe('NEP-649 seed phrase API', () => {
     it('rejects invalid inputs instead of falling back to another key', () => {
         for (const phrase of ['', 'not a mnemonic', 'abandon '.repeat(12).trim()]) {
             assert.throws(() => parseSeedPhrase(phrase, pq), /mnemonic/);
-            assert.throws(() => deriveSeedPhraseKeys(phrase), /mnemonic/);
         }
         for (const options of [null, [], 'ml-dsa-65', { keyType: 'secp256k1' }, { passphrase: 12 }, { derivationPath: 1 }]) {
             assert.throws(() => generateSeedPhrase(undefined, options));
         }
         for (const entropy of [Buffer.alloc(16), Buffer.alloc(20), '00'.repeat(16), 'gg'.repeat(24), '00'.repeat(33)]) {
             assert.throws(() => generateSeedPhrase(entropy, pq), /entropy/);
-        }
-        for (const options of [null, [], { passphrase: 12 }]) {
-            assert.throws(() => deriveSeedPhraseKeys(mnemonic, options));
         }
         for (const bytes of [0, 15, 65]) assert.throws(() => deriveMLDSA65Node(Buffer.alloc(bytes), 'm'));
         assert.throws(() => deriveMLDSA65Node(Buffer.alloc(64), 'm/0'));

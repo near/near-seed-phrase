@@ -10,7 +10,6 @@ const nacl = require('tweetnacl');
 const { deriveMLDSA65Node, validateMLDSA65Path } = require('./nep649');
 
 const KEY_DERIVATION_PATH = "m/44'/397'/0'"
-const FULL_KEY_DERIVATION_PATH = "m/44'/397'/0'/0'/1'"
 
 const parseOptions = (options) => {
     if (options === undefined) return { keyType: 'ed25519' }
@@ -48,7 +47,7 @@ const normalizeSeedPhrase = (seedPhrase) => seedPhrase.trim().split(/\s+/).map(p
 const parseSeedPhrase = (seedPhrase, pathOrOptions) => {
     // Preserve the original positional path API, including its legacy defaults.
     const options = typeof pathOrOptions === 'string' ?
-        { keyType: 'ed25519', derivationPath: pathOrOptions || KEY_DERIVATION_PATH } : parseOptions(pathOrOptions)
+        { keyType: 'ed25519', derivationPath: pathOrOptions || KEY_DERIVATION_PATH } : parseOptions(pathOrOptions || undefined)
     const { keyType, passphrase } = options
     const derivationPath = options.derivationPath === undefined ? KEY_DERIVATION_PATH : options.derivationPath
     const usesOptions = pathOrOptions && typeof pathOrOptions === 'object'
@@ -59,43 +58,17 @@ const parseSeedPhrase = (seedPhrase, pathOrOptions) => {
     }
     // bip39-light predates normalization support. Apply BIP-39's NFKD rule
     // only for the new options API; legacy recovery must remain byte-identical.
-    const seed = usesOptions ?
-        bip39.mnemonicToSeed(normalized.normalize('NFKD'), (passphrase || '').normalize('NFKD')) :
-        bip39.mnemonicToSeed(normalized)
-    if (keyType === 'ml-dsa-65') {
-        if (typeof Object.hasOwn !== 'function') {
-            throw new Error('ML-DSA-65 requires Node.js 16.9+ or a browser with Object.hasOwn support')
-        }
-        const { keygen } = require('./mldsa65.cjs')
-        const { key } = deriveMLDSA65Node(seed, derivationPath)
-        const keyPair = keygen(key)
-        return {
-            seedPhrase,
-            secretKey: 'ml-dsa-65:' + bs58.encode(Buffer.from(keyPair.secretKey)),
-            publicKey: 'ml-dsa-65:' + bs58.encode(Buffer.from(keyPair.publicKey))
-        }
+    const seed = bip39.mnemonicToSeed(usesOptions ? normalized.normalize('NFKD') : normalized,
+        passphrase === undefined ? '' : passphrase.normalize('NFKD'))
+    const { key } = keyType === 'ml-dsa-65' ?
+        deriveMLDSA65Node(seed, derivationPath) : derivePath(derivationPath, seed.toString('hex'))
+    if (keyType === 'ml-dsa-65' && typeof Object.hasOwn !== 'function') {
+        throw new Error('ML-DSA-65 requires Node.js 16.9+ or a browser with Object.hasOwn support')
     }
-    const { key } = derivePath(derivationPath, seed.toString('hex'))
-    const keyPair = nacl.sign.keyPair.fromSeed(key)
-    const publicKey = 'ed25519:' + bs58.encode(Buffer.from(keyPair.publicKey))
-    const secretKey = 'ed25519:' + bs58.encode(Buffer.from(keyPair.secretKey))
+    const keyPair = keyType === 'ml-dsa-65' ? require('./mldsa65.cjs').keygen(key) : nacl.sign.keyPair.fromSeed(key)
+    const publicKey = keyType + ':' + bs58.encode(Buffer.from(keyPair.publicKey))
+    const secretKey = keyType + ':' + bs58.encode(Buffer.from(keyPair.secretKey))
     return { seedPhrase, secretKey, publicKey }
-}
-
-// Return candidates for wallet recovery; no network/account discovery is done.
-const deriveSeedPhraseKeys = (seedPhrase, options) => {
-    if (options !== undefined && (!options || typeof options !== 'object' || Array.isArray(options))) {
-        throw new TypeError('Recovery options must be an object')
-    }
-    const passphrase = options && options.passphrase
-    if (!bip39.validateMnemonic(normalizeSeedPhrase(seedPhrase.normalize('NFKD')))) throw new Error('Invalid BIP-39 mnemonic')
-    return ['ed25519', 'ml-dsa-65'].reduce((keys, keyType) => keys.concat(
-        [KEY_DERIVATION_PATH, FULL_KEY_DERIVATION_PATH].map(derivationPath => ({
-            ...parseSeedPhrase(seedPhrase, { keyType, derivationPath, passphrase }),
-            keyType,
-            derivationPath
-        }))
-    ), [])
 }
 
 const findSeedPhraseKey = (seedPhrase, publicKeys) => {
@@ -109,11 +82,9 @@ const findSeedPhraseKey = (seedPhrase, publicKeys) => {
 
 module.exports = {
     KEY_DERIVATION_PATH,
-    FULL_KEY_DERIVATION_PATH,
     generateSeedPhrase,
     normalizeSeedPhrase,
     parseSeedPhrase,
-    deriveSeedPhraseKeys,
     findSeedPhraseKey
 }
 
